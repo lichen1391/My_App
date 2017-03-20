@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app.dao.system.UserDao">
+	<!-- 先定义一个Interface，UserMapper，然后Mapper文件的namespace指向的就是这个Interface， UserInterface里定义的方法和User.xml文件中的一样, 然后代码里直接使用接口 -->
+	
+	<!-- 动态SQL语句 -->
+	
+	<!-- 用户添加 -->
+	<insert id="add" parameterType="User">
+		insert into users set user_id = #{user_id}, user_name = #{user_name}, password = #{password}, 
+		sex = #{sex}, phone = #{phone}, residence = #{residence}, profession = #{profession}, 
+		classnum = #{classnum}, specialty = #{specialty}, role_id = #{role_id}
+	</insert>
+	
+	<!-- 用户修改 -->
+	<update id="update" parameterType="User">
+		update users
+		<set>
+			<if test="user_name != null and user_name != ''"> user_name = #{user_name},</if>
+			<if test="password != null and password != ''"> password = #{password},</if>
+			<if test="sex != null and sex != ''"> sex = #{sex}, </if>
+			<if test="phone != 0"> phone = #{phone}, </if>
+			<if test="classnum != 0"> classnum = #{classnum},</if>
+			<if test="specialty != null and specialty != ''"> specialty = #{specialty},</if>
+			<if test="role_id != 0"> role_id = #{role_id},</if>
+			<if test="residence != '' and residence != null"> residence = #{residence},</if>
+			<if test="profession != null and profession != ''"> profession = #{profession} </if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 用户删除 -->
+	<delete id="delete" parameterType="int">
+		delete from users where id = #{id}
+	</delete>
+	
+	<select id="getAll" parameterType="PageData"  resultType="map">
+		select u.id, u.user_id, u.user_name, u.password, u.sex, u.phone, u.classnum, u.specialty, u.residence, u.profession, u.role_id, r.role_name
+		from users as u left join role as r on r.role_id = u.role_id where 1 = 1
+		<!-- 
+			注意：#将传入的数据都当成一个字符串，会对自动传入的数据加一个双引号。 $将传入的数据直接显示生成在sql中
+			#方式能够很大程度防止sql注入。MyBatis 使用 order by 动态参数时需要注意，用$而不是#
+		 -->
+		 <if test="search != null">
+		 	and user_name like '%' #{search} '%'
+		 </if>
+		 <if test="search_value != '' and search_value != null">
+		 	and u.role_id = #{search_value}
+		 </if>
+		<if test="sort != '' and order != ''">
+			order by ${sort} ${order} 
+		</if>
+		<if test="start != null and rows != 0">
+			limit #{start} , #{rows}
+		</if>
+	</select>
+	
+	<select id="getAll_count" parameterType="PageData"  resultType="int">
+		select count(*) from users where 1 = 1
+		<if test="search != null">
+		 	and user_name like '%' #{search} '%'
+		 </if>
+		 <if test="search_value != null and search_value != ''">
+		 	and role_id = #{search_value}
+		 </if>
+	</select>
+	
+	<select id="getSelect" parameterType="PageData"  resultType="Map">
+		select * from users where 1 = 1
+		<if test="search != '' and search != null and search_value != '' and search_value != null">
+		 	and ${search} = #{search_value}
+		</if>
+	</select>
+	
+	<select id="getRole" parameterType="PageData"  resultType="Map">
+		select * from role where 1 = 1
+		<if test="search != '' and search != null and search_value != '' and search_value != null">
+			and ${search} = #{search_value}
+		</if>
+	</select>
+	
+	
+</mapper>

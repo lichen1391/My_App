@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app.dao.system.AdminDao">
+	<!-- 先定义一个Interface和adminMapper.xml，然后Mapper文件的namespace指向的就是这个Interface， Interface里定义的方法和xml文件中的一样, 然后代码里直接使用接口 -->
+	<resultMap type="Admin" id="AdminResult">
+		<result property="admin_id" column="admin_id" />
+		<result property="admin_name" column="admin_name" />
+		<result property="password" column="password" />
+		<result property="phone" column="phone" />
+		<result property="role_id" column="role_id" />
+	</resultMap>
+	
+	<!-- 动态SQL语句 -->
+	
+	<!-- 登录 -->
+	<select id="login" parameterType="Admin" resultType="map">
+		select a.admin_id, a.admin_name, a.password, a.phone, a.role_id, r.role_name from admin as a left join role as r on
+		r.role_id = a.role_id where admin_id = #{admin_id} and password = #{password}
+	</select>
+	
+	<!-- 退出登录 -->
+	<select id="logout" parameterType="Admin" resultType="java.util.HashMap">
+		select a.admin_id, a.admin_name, a.password, a.phone, a.role_id, r.role_name from admin as a left join role as r on
+		r.role_id = a.role_id where admin_id = #{admin_id} and password = #{password}
+	</select>
+	
+	
+</mapper>

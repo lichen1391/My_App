@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app.dao.system.BusDao">
+
+	<select id="getAll" parameterType="PageData" resultType="map">
+		select b.id, b.bus_id, b.title, b.contents, b.user_id, b.user_name,b.browse, b.likes, b.type_id, b.status
+		from business as b where 1 = 1
+		 <if test="search != null">
+		 	and title like '%' #{search} '%'
+		 </if>
+		 <if test="search_value != '' and search_value != null">
+		 	and b.type_id = #{search_value}
+		 </if>
+		<if test="sort != '' and order != ''">
+			order by ${sort} ${order} 
+		</if>
+		<if test="start != null and rows != 0">
+			limit #{start} , #{rows}
+		</if>
+	</select>
+
+	<select id="getAll_count" parameterType="PageData"  resultType="int">
+		select count(*) from business where 1 = 1
+		<if test="search != null">
+		 	and title like '%' #{search} '%'
+		 </if>
+		 <if test="search_value != null and search_value != ''">
+		 	and title = #{search_value}
+		 </if>
+	</select>
+	
+	<select id="getSelect" parameterType="PageData"  resultType="Map">
+		select * from business where 1 = 1
+		<if test="search != '' and search != null and search_value != '' and search_value != null">
+		 	and ${search} = #{search_value}
+		</if>
+	</select>
+	
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app.dao.system.MenuDao">
+	<!-- 先定义一个Interface和adminMapper.xml，然后Mapper文件的namespace指向的就是这个Interface， Interface里定义的方法和xml文件中的一样, 然后代码里直接使用接口 -->
+	<resultMap type="map" id="MenuResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="parentId" column="parentId" />
+		<result property="url" column="url" />
+		<result property="icon" column="icon" />
+		<result property="order" column="order" />
+		<result property="isHeader" column="isHeader" />
+	</resultMap>
+	
+	<select id="getMenu" parameterType="map" resultMap="MenuResult" resultType="java.util.HashMap">
+		select id, name, parentId, url, icon, `order`, isHeader, childMenus from menu where parentId = 0
+	</select>
+	
+	<select id="getMenuChild1" parameterType="map" resultMap="MenuResult" resultType="java.util.HashMap">
+		select id, name, parentId, url, icon, `order`, isHeader, childMenus from menu where parentId =1
+	</select>
+	
+	<select id="getMenuChild2" parameterType="map" resultMap="MenuResult" resultType="java.util.HashMap">
+		select id, name, parentId, url, icon, `order`, isHeader, childMenus from menu where parentId =2
+	</select>
+	
+</mapper>

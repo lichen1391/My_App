@@ -34,6 +34,7 @@ $('#list').datagrid({
 			case '管理员' : return "<span class='admin_user'>管理员</span>";
 			case '普通用户' : return "<span>普通用户</span>";
 			case 'VIP用户' : return "<span class='vip_user'>VIP用户</span>";
+			case '超级管理员' : return "<span class='vip_user'>超级管理员</span>";
 			default: return "--";
 		}
 	}},
@@ -91,32 +92,34 @@ tools = {
     },
     
     delete: function () {
-    	$.messager.confirm("提示","确定要删除吗？",function(){
-	        var rows = $('#list').datagrid('getSelections');
-	        var obj = rows[0];
-	        if (rows.length == 0) {
-	            $.messager.alert('警告操作！', '请选择要删除的数据！', 'warning');
-	        }
-	        $.ajax({
-	        	url : "user/delete",
-	    		dataType : "json",
-	    		type : "post",
-	    		data : {"id":obj.id},
-	    		success : function(data){
-	    			if(data == 1){
-	    				$.messager.show({
-							title : '提示',
-							msg : '删除成功',
-						});
-						$('#list').datagrid('reload');
-	    			}else{
-	    				$.messager.show({
-							title : '提示',
-							msg : '删除失败',
-						});
-	    			}
-	    		}
-	        });
+    	$.messager.confirm("提示","确定要删除吗？",function(c){
+    		if(c){
+		        var rows = $('#list').datagrid('getSelections');
+		        var obj = rows[0];
+		        if (rows.length == 0) {
+		            $.messager.alert('警告操作！', '请选择要删除的数据！', 'warning');
+		        }
+		        $.ajax({
+		        	url : "user/delete",
+		    		dataType : "json",
+		    		type : "post",
+		    		data : {"id":obj.id},
+		    		success : function(data){
+		    			if(data == 1){
+		    				$.messager.show({
+								title : '提示',
+								msg : '删除成功',
+							});
+							$('#list').datagrid('reload');
+		    			}else{
+		    				$.messager.show({
+								title : '提示',
+								msg : '删除失败',
+							});
+		    			}
+		    		}
+		        });
+    		}
     	});
     }
 

@@ -37,7 +37,7 @@
         	<tr><td align=left>职业：</td><td><input type="text" name="profession" class="easyui-textbox easyui-validatebox" data-options="required:true,validType:'intOrFloat'" style="width:200px;"></td></tr>
         	<tr><td align=left>班级号：</td><td><input type="text" name="classnum" class="easyui-textbox easyui-validatebox" data-options="required:true,validType:'intOrFloat'" style="width:200px;"></td></tr>
         	<tr><td align=left>专业：</td><td><input type="text" name="specialty" class="easyui-textbox easyui-validatebox" data-options="required:true,validType:'intOrFloat'" style="width:200px;"></td></tr>
-        	<tr><td align=left>用户类型：</td><td><input type="text" id="add_role" name="role_id" class="easyui-combobox easyui-validatebox" data-options="required:true,validType:'intOrFloat'" style="width:200px;"></td></tr>
+        	<tr><td align=left>用户类型：</td><td><input type="text" id="add_role" name="role_id" class="easyui-combobox" style="width:200px;"></td></tr>
     	</table>
     </form>
 

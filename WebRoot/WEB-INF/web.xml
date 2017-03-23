@@ -69,7 +69,10 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-	<!-- spring监听器 -->
+	<!-- spring监听器 
+	Spring会创建一个WebApplicationContext上下文，即IoC容器 
+	IoC：即控制反转，分两种类型：依赖注入(DI)和依赖查找(DL)，把自己创造，使用的对象交给系统去控制，并通过get，set方法将参数传递给你使用
+	-->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

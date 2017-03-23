@@ -12,7 +12,7 @@
 	<!-- 使用注解的包，包括子集 -->
 	<context:component-scan base-package="app.controller,app.customClass"></context:component-scan>
 	
-	<!-- 启用spring mvc 注解-->  
+	<!-- 启用spring-mvc 注解映射-->  
 	<mvc:annotation-driven/>	
 	<mvc:default-servlet-handler/>
 	
